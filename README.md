@@ -1,83 +1,17 @@
 <!--
 
-edit:   https://liascript.github.io/LiveEditor/?/show/file/https://raw.githubusercontent.com/LiaPlayground/microbit-demo-tutorial/refs/heads/main/README.md
+author:   Sebastian Zug; André Dietrich
 
-import: https://raw.githubusercontent.com/liaTemplates/webserial/main/README.md
+email:    LiaScript@web.de
 
-@microbit: @microbit_(@uid,```@input```)
+language: de
 
-@microbit_
-<script>
-const iframe = document.querySelector('#simulator_@0')
-const simulator = iframe.contentWindow
+comment:  Dies ist ein interaktiver Demo-Kurs zu MicroPython basierend auf der MicroBit v2 Plattform. 
 
-const onMessage = (e) => {
-    if (e.source !== simulator) return;
-    const { data } = e;
-    switch (data.kind) {
-      case 'serial_output':
-        console.stream(data.data);
-        break;
-      case 'log_output':
-        if (data.headings) console.log(data.headings);
-        if (data.data)     console.log(data.data);
-        break;
-      case 'log_delete':
-        console.debug('[log_delete]');
-        break;
-      case 'request_flash':
-        send.lia("LIA: terminal");
-        simulator.postMessage({
-          kind: 'flash',
-          filesystem: {
-            'main.py': new TextEncoder().encode(`@1`),
-          },
-        }, '*');
-        break;
-      case 'internal_error':
-        console.error('Simulator internal error:', data.error);
-        break;
-    }
-  };
+edit:    https://liascript.github.io/LiveEditor/?/show/file/https://raw.githubusercontent.com/LiaPlayground/microbit-demo-tutorial/refs/heads/main/README.md
 
-window.addEventListener('message', onMessage);
-
-send.handle("input", (data) => {
-  simulator.postMessage({
-      kind: 'serial_input',
-      data: data + "\r\n",
-    },
-    '*'
-  )
-})
-
-send.handle("stop", () => {
-    // detach the message listener
-    window.removeEventListener('message', onMessage);
-
-    // reset the iframe by reloading its src
-    // (you can also set src="" then back, or completely remove/add the element)
-    iframe.src = iframe.src;
-
-    // optionally hide it if you want:
-    iframe.style.display = "none";
-  });
-
-iframe.style.display = "block"
-
-"LIA: wait"
-</script>
-
-<iframe
-  id="simulator_@0"
-  src="https://python-simulator.usermbit.org/v/0.1/simulator.html?color=red"
-  title="Simulator"
-  frameborder="0"
-  scrolling="no"
-  sandbox="allow-scripts allow-same-origin"
-  style="width: 100%; max-width: 500px; aspect-ratio: 10 / 8; display: none"
-></iframe>
-@end
+import:  https://raw.githubusercontent.com/liaTemplates/webserial/main/README.md
+         https://raw.githubusercontent.com/liaTemplates/MicroBit-Simulator/main/README.md
 
 persistent: true
 
